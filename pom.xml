@@ -14,7 +14,7 @@
     </parent>
     <groupId>falcon.springframework</groupId>
     <artifactId>spring5-pet-clinic</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <name>spring5-pet-clinic</name>
     <description>Demo project for Spring Boot</description>
 
@@ -41,7 +41,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/MMrFalcon/Spring5-PetClinic.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>spring5-pet-clinic-0.0.2</tag>
   </scm>
 
 </project>
