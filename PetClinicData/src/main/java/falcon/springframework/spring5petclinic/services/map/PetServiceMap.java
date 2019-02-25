@@ -1,11 +1,11 @@
 package falcon.springframework.spring5petclinic.services.map;
 
 import falcon.springframework.spring5petclinic.model.Pet;
-import falcon.springframework.spring5petclinic.services.CrudService;
+import falcon.springframework.spring5petclinic.services.PetService;
 
 import java.util.Set;
 
-public class PetServiceMap extends AbstractMapService<Pet, Long> implements CrudService<Pet, Long> {
+public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetService {
 
     @Override
     public Set<Pet> findAll() {
