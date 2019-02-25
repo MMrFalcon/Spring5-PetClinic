@@ -26,14 +26,12 @@ public class DataInitializer implements CommandLineRunner {
          */
 
         Owner falcon = new Owner();
-        falcon.setId(1L);
         falcon.setFirstName("Jacob");
         falcon.setLastName("Falcon");
 
         ownerService.save(falcon);
 
         Owner geralt = new Owner();
-        geralt.setId(2L);
         geralt.setFirstName("Geralt");
         geralt.setLastName("of Rivia");
 
@@ -42,14 +40,12 @@ public class DataInitializer implements CommandLineRunner {
         System.out.println("Loaded owners");
 
         Vet sam = new Vet();
-        sam.setId(1L);
         sam.setFirstName("Sam");
         sam.setLastName("Sparrow");
 
         vetService.save(sam);
 
         Vet alberta = new Vet();
-        alberta.setId(2L);
         alberta.setFirstName("Alberta");
         alberta.setLastName("Grimm");
 
