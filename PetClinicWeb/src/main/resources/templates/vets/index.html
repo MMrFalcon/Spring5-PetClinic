@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout::layout (~{::body},'vets')}">
 <head>
     <meta charset="UTF-8">
     <title>Vets</title>
 
 </head>
 <body>
-
+<!--/*@thymesVar id="vet" type="falcon.springframework.spring5petclinic.model.Vet"*/-->
 <h1 class="text-center" th:text="'Vets Page'">Vets Page</h1>
 
 
-<table class="table">
+<table class="table table-striped">
     <thread>
         <tr>
             <th>ID</th>
