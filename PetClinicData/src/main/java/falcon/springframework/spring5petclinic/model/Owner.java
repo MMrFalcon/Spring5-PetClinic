@@ -1,5 +1,6 @@
 package falcon.springframework.spring5petclinic.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Owner extends Person {
@@ -7,6 +8,7 @@ public class Owner extends Person {
     private String address;
     private String phone;
     private String city;
+    private Set<Pet> pets = new HashSet<>(); //will save entity when it is added to Set
 
     public String getAddress() {
         return address;
@@ -31,8 +33,6 @@ public class Owner extends Person {
     public void setCity(String city) {
         this.city = city;
     }
-
-    private Set<Pet> pets;
 
     public Set<Pet> getPets() {
         return pets;
