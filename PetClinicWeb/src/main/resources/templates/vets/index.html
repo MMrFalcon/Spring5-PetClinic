@@ -11,13 +11,13 @@
 
 
 <table class="table table-striped">
-    <thread>
+    <thead>
         <tr>
             <th>ID</th>
             <th>First Name</th>
             <th>Last Name</th>
         </tr>
-    </thread>
+    </thead>
     <tbody>
     <tr th:each="vet : ${vets}">
         <td th:text="${vet.id}">1</td>
