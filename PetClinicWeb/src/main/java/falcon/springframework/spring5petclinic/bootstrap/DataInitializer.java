@@ -1,11 +1,9 @@
 package falcon.springframework.spring5petclinic.bootstrap;
 
-import falcon.springframework.spring5petclinic.model.Owner;
-import falcon.springframework.spring5petclinic.model.Pet;
-import falcon.springframework.spring5petclinic.model.PetType;
-import falcon.springframework.spring5petclinic.model.Vet;
+import falcon.springframework.spring5petclinic.model.*;
 import falcon.springframework.spring5petclinic.services.OwnerService;
 import falcon.springframework.spring5petclinic.services.PetTypeService;
+import falcon.springframework.spring5petclinic.services.SpecialityService;
 import falcon.springframework.spring5petclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,19 +16,26 @@ public class DataInitializer implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialityService specialityService;
 
-    public DataInitializer(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+    public DataInitializer(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialityService = specialityService;
     }
 
     @Override
     public void run(String... args) throws Exception {
 
-        /**
-         * Creation of simple POJO when application starts
-         */
+        int count = ownerService.findAll().size();
+
+        if(count == 0) {
+            loadData();
+        }
+    }
+
+    private void loadData() {
 
         PetType dog = new PetType();
         dog.setName("Dog");
@@ -41,6 +46,20 @@ public class DataInitializer implements CommandLineRunner {
         PetType savedHorse = petTypeService.save(horse);
 
         System.out.println("Loaded Pet Types");
+
+        Speciality radiology = new Speciality();
+        radiology.setDescription("Radiology Vet Spec");
+        Speciality savedRadiology = specialityService.save(radiology);
+
+        Speciality dentist = new Speciality();
+        dentist.setDescription("Dentist specialization");
+        Speciality savedDentist = specialityService.save(dentist);
+
+        Speciality surgery = new Speciality();
+        surgery.setDescription("Surgery specialization");
+        Speciality savedSurgery = specialityService.save(surgery);
+
+        System.out.println("Loaded Vet Specialization");
 
         Owner falcon = new Owner();
         falcon.setFirstName("Jacob");
@@ -80,17 +99,16 @@ public class DataInitializer implements CommandLineRunner {
         Vet sam = new Vet();
         sam.setFirstName("Sam");
         sam.setLastName("Sparrow");
-
+        sam.getSpecialities().add(savedDentist);
+        sam.getSpecialities().add(savedSurgery);
         vetService.save(sam);
 
         Vet alberta = new Vet();
         alberta.setFirstName("Alberta");
         alberta.setLastName("Grimm");
-
+        alberta.getSpecialities().add(savedRadiology);
         vetService.save(alberta);
 
         System.out.println("Loaded vets");
-
-
     }
 }

@@ -42,8 +42,6 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
                     if (pet.getPetType() != null) {
                         if (pet.getPetType().getId() == null) {
                             pet.setPetType(petTypeService.save(pet.getPetType()));
-                        }else{
-                            throw new RuntimeException("Object already exist");
                         }
                     }else {
                         throw new RuntimeException("Pet Type is required");
