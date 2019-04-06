@@ -2,7 +2,7 @@ package falcon.springframework.spring5petclinic.model;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
@@ -13,7 +13,7 @@ public class Visit extends BaseEntity {
     private LocalDate date;
     private String description;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
