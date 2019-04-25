@@ -75,7 +75,7 @@ public class DataInitializer implements CommandLineRunner {
         jacobsPet.setBirthDate(LocalDate.of(2017,3,22));
         jacobsPet.setOwner(falcon);
         jacobsPet.setName("Pimpek");
-        falcon.getPets().add(petService.save(jacobsPet));
+        falcon.getPets().add(jacobsPet);
 
         ownerService.save(falcon);
 
@@ -98,7 +98,7 @@ public class DataInitializer implements CommandLineRunner {
         geraltsPet.setBirthDate(LocalDate.of(2008,11,13));
         geraltsPet.setName("Plotka");
         geraltsPet.setOwner(geralt);
-        geralt.getPets().add(petService.save(geraltsPet));
+        geralt.getPets().add(geraltsPet);
 
 
         ownerService.save(geralt);
