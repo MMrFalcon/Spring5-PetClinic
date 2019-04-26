@@ -54,6 +54,13 @@ class OwnerServiceMapTest {
     }
 
     @Test
+    void saveWithoutObject() {
+        final String exceptionMessage = "Entity is empty";
+        Exception exception = assertThrows(NullPointerException.class, () -> ownerServiceMap.save(null));
+        assertEquals(exceptionMessage, exception.getMessage());
+    }
+
+    @Test
     void findById() {
         Owner owner = ownerServiceMap.findById(id);
         assertEquals(id, owner.getId());

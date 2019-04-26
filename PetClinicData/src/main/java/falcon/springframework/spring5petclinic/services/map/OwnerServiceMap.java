@@ -55,7 +55,7 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 
             return super.save(object);
         }else {
-            throw new NullPointerException("Null Entity");
+            throw new NullPointerException("Entity is empty");
         }
 
     }
