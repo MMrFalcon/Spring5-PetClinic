@@ -2,12 +2,14 @@ package falcon.springframework.spring5petclinic.bootstrap;
 
 import falcon.springframework.spring5petclinic.model.*;
 import falcon.springframework.spring5petclinic.services.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 @Component
+@Slf4j
 public class DataInitializer implements CommandLineRunner {
 
     private final OwnerService ownerService;
@@ -47,7 +49,7 @@ public class DataInitializer implements CommandLineRunner {
         dog.setName("Horse");
         PetType savedHorse = petTypeService.save(horse);
 
-        System.out.println("Loaded Pet Types");
+        log.debug("Loaded Pet Types");
 
         Speciality radiology = new Speciality();
         radiology.setDescription("Radiology Vet Spec");
@@ -61,7 +63,7 @@ public class DataInitializer implements CommandLineRunner {
         surgery.setDescription("Surgery specialization");
         Speciality savedSurgery = specialityService.save(surgery);
 
-        System.out.println("Loaded Vet Specialization");
+        log.debug("Loaded Vet Specialization");
 
         Owner falcon = new Owner();
         falcon.setFirstName("Jacob");
@@ -103,7 +105,7 @@ public class DataInitializer implements CommandLineRunner {
 
         ownerService.save(geralt);
 
-        System.out.println("Loaded owners and their pets with visits");
+        log.debug("Loaded owners and their pets with visits");
 
         Vet sam = new Vet();
         sam.setFirstName("Sam");
@@ -118,6 +120,6 @@ public class DataInitializer implements CommandLineRunner {
         alberta.getSpecialities().add(savedRadiology);
         vetService.save(alberta);
 
-        System.out.println("Loaded vets");
+        log.debug("Loaded vets");
     }
 }
