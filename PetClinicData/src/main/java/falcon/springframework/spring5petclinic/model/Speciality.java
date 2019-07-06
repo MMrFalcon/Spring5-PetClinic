@@ -10,9 +10,14 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Table(name = "specialities")
 public class Speciality extends BaseEntity {
+
+    @Builder
+    public Speciality(Long id, String description) {
+        super(id);
+        this.description = description;
+    }
 
     private String description;
 }

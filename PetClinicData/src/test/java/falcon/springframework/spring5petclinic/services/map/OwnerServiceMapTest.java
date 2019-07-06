@@ -4,6 +4,7 @@ import falcon.springframework.spring5petclinic.model.Owner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,13 +12,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class OwnerServiceMapTest {
 
     private OwnerServiceMap ownerServiceMap;
-    private final Long id  = 1L;
-    private final String lastName = "Sparroww";
+    private static final Long OWNER_ID = 1L;
+    private static final String OWNER_LAST_NAME = "Sparroww";
+
+    private Owner savedOwner;
+
     @BeforeEach
     void setUp() {
-        ownerServiceMap = new OwnerServiceMap(new PetTypeMap(), new PetServiceMap());
+        ownerServiceMap = new OwnerServiceMap(new PetTypeServiceMap(), new PetServiceMap());
 
-        ownerServiceMap.save(Owner.builder().id(id).lastName(lastName).build());
+        savedOwner = ownerServiceMap.save(Owner.builder().id(OWNER_ID).lastName(OWNER_LAST_NAME).build());
     }
 
     @Test
@@ -28,13 +32,13 @@ class OwnerServiceMapTest {
 
     @Test
     void delete() {
-        ownerServiceMap.delete(ownerServiceMap.findById(id));
+        ownerServiceMap.delete(ownerServiceMap.findById(OWNER_ID));
         assertEquals(0,ownerServiceMap.findAll().size());
     }
 
     @Test
     void deleteById() {
-        ownerServiceMap.deleteById(id);
+        ownerServiceMap.deleteById(OWNER_ID);
         assertEquals(0,ownerServiceMap.findAll().size());
     }
 
@@ -62,20 +66,27 @@ class OwnerServiceMapTest {
 
     @Test
     void findById() {
-        Owner owner = ownerServiceMap.findById(id);
-        assertEquals(id, owner.getId());
+        Owner owner = ownerServiceMap.findById(OWNER_ID);
+        assertEquals(OWNER_ID, owner.getId());
     }
 
     @Test
     void findByLastName() {
-        Owner sparroww = ownerServiceMap.findByLastName("Sparroww");
+        Owner sparroww = ownerServiceMap.findByLastName(OWNER_LAST_NAME);
         assertNotNull(sparroww);
-        assertEquals(id, sparroww.getId());
+        assertEquals(OWNER_ID, sparroww.getId());
     }
 
     @Test
     void findByLastNameNotFound() {
         Owner owner = ownerServiceMap.findByLastName("Sam");
         assertNull(owner);
+    }
+
+    @Test
+    void  findAllByLastNameLike() {
+        List<Owner> foundOwners = ownerServiceMap.findAllByLastNameLike(OWNER_LAST_NAME);
+        assertEquals(foundOwners.size(), 1);
+        assertEquals(foundOwners.get(0), savedOwner);
     }
 }

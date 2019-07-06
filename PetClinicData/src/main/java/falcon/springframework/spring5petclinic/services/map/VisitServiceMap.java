@@ -26,19 +26,19 @@ public class VisitServiceMap extends AbstractMapService<Visit, Long> implements 
     }
 
     @Override
-    public Visit save(Visit visit) {
+    public Visit save(Visit object) {
 
-        if(visit.getPet() == null || visit.getPet().getOwner() == null || visit.getPet().getId() == null
-                || visit.getPet().getOwner().getId() == null){
-            throw new RuntimeException("Invalid Visit:\n" +
-                    "Pet Entity: " + visit.getPet() + "\n" +
-                    "Owner Entity: " + visit.getPet().getOwner() + "\n" +
-                    "PetId: " + visit.getPet().getId() + "\n" +
-                    "OwnerId: " +  visit.getPet().getOwner().getId());
+        if (object == null) {
+            throw new RuntimeException("Visit entity cannot be null");
+        }
+
+        if(object.getPet() == null || object.getPet().getOwner() == null || object.getPet().getId() == null
+                || object.getPet().getOwner().getId() == null){
+            throw new RuntimeException("Invalid Visit - Some information about Pet or Owner entity are missing");
 
         }
 
-        return super.save(visit);
+        return super.save(object);
     }
 
     @Override

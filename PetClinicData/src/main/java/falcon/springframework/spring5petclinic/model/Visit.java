@@ -13,9 +13,16 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Table(name = "visits")
 public class Visit extends BaseEntity {
+
+    @Builder
+    public Visit(Long id, LocalDate date, String description, Pet pet) {
+        super(id);
+        this.date = date;
+        this.description = description;
+        this.pet = pet;
+    }
 
     private LocalDate date;
     private String description;

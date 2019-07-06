@@ -5,7 +5,7 @@ import falcon.springframework.spring5petclinic.model.BaseEntity;
 import java.util.*;
 
 public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
-
+//todo test all of my cases
     protected Map<Long, T> map = new HashMap<>();
 
     Set<T> findAll(){
@@ -40,7 +40,7 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> 
 
     private Long getNextId(){
 
-        Long nextId = null;
+        long nextId;
 
         try {
             nextId = Collections.max(map.keySet()) + 1;

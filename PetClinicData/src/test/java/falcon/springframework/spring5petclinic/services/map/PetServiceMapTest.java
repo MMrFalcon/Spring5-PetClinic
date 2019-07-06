@@ -6,20 +6,20 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PetServiceMapTest {
     private static final String NAME = "Rex";
     private static final Long FIRST_ID = 1L;
+
+    private Pet savedPet;
 
     private PetServiceMap petService;
 
     @BeforeEach
     void setUp() {
         petService = new PetServiceMap();
-
-        petService.save(Pet.builder().name(NAME).id(FIRST_ID).build());
+        savedPet = petService.save(Pet.builder().name(NAME).id(FIRST_ID).build());
     }
 
 
@@ -31,15 +31,14 @@ class PetServiceMapTest {
 
     @Test
     void delete() {
-        petService.delete(petService.findById(FIRST_ID));
+        petService.delete(savedPet);
         assertEquals(0, petService.findAll().size());
     }
 
     @Test
     void deleteById() {
-        assertEquals(1, petService.findAll().size());
         petService.deleteById(FIRST_ID);
-        assertEquals(0,petService.findAll().size());
+        assertEquals(0, petService.findAll().size());
     }
 
     @Test
@@ -49,6 +48,21 @@ class PetServiceMapTest {
         Pet savedPet = petService.save(pet);
         assertEquals(secondId, savedPet.getId());
     }
+
+    @Test
+    void saveWithoutId() {
+        Pet savedPet = petService.save(Pet.builder().build());
+        assertNotNull(savedPet);
+        assertNotNull(savedPet.getId());
+    }
+
+    @Test
+    void saveWithoutObject() {
+        final String exceptionMessage = "Object cannot be null";
+        Exception exception = assertThrows(RuntimeException.class, () -> petService.save(null));
+        assertEquals(exceptionMessage, exception.getMessage());
+    }
+
 
     @Test
     void findById() {
