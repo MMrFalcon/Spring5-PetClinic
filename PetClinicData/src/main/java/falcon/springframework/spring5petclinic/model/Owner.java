@@ -20,11 +20,11 @@ import java.util.Set;
 public class Owner extends Person {
     @Builder
     public Owner(Long id, String firstName, String lastName, String address, String city,
-                 String telephone, Set<Pet> pets) {
+                 String phone, Set<Pet> pets) {
         super(id, firstName, lastName);
         this.address = address;
         this.city = city;
-        this.phone = telephone;
+        this.phone = phone;
 
         if(pets != null) {
             this.pets = pets;

@@ -46,7 +46,7 @@ public class DataInitializer implements CommandLineRunner {
         PetType savedDog = petTypeService.save(dog);
 
         PetType horse = new PetType();
-        dog.setName("Horse");
+        horse.setName("Horse");
         PetType savedHorse = petTypeService.save(horse);
 
         log.debug("Loaded Pet Types");
@@ -91,9 +91,9 @@ public class DataInitializer implements CommandLineRunner {
         Owner geralt = new Owner();
         geralt.setFirstName("Geralt");
         geralt.setLastName("of Rivia");
-        falcon.setAddress("Port Alley Tavern");
-        falcon.setCity("Wizima");
-        falcon.setPhone("555-555");
+        geralt.setAddress("Port Alley Tavern");
+        geralt.setCity("Wizima");
+        geralt.setPhone("555-555");
 
         Pet geraltsPet = new Pet();
         geraltsPet.setPetType(savedHorse);
@@ -104,6 +104,37 @@ public class DataInitializer implements CommandLineRunner {
 
 
         ownerService.save(geralt);
+
+        Visit horseVisit = new Visit();
+        horseVisit.setPet(geraltsPet);
+        horseVisit.setDate(LocalDate.now());
+        horseVisit.setDescription("That was visit");
+
+        visitService.save(horseVisit);
+
+        Owner falcon2 = new Owner();
+        falcon2.setFirstName("Andrew");
+        falcon2.setLastName("Falcon");
+        falcon2.setAddress("Some Street 22");
+        falcon2.setCity("Some City");
+        falcon2.setPhone("+48 5532 1233 42");
+
+        Pet falconPet = new Pet();
+        falconPet.setPetType(savedDog);
+        falconPet.setBirthDate(LocalDate.of(2017,3,22));
+        falconPet.setOwner(falcon2);
+        falconPet.setName("Rex");
+        falcon2.getPets().add(falconPet);
+
+        ownerService.save(falcon2);
+
+        Visit secondDogVisit = new Visit();
+        secondDogVisit.setPet(falconPet);
+        secondDogVisit.setDate(LocalDate.now());
+        secondDogVisit.setDescription("That was visit");
+
+        visitService.save(secondDogVisit);
+
 
         log.debug("Loaded owners and their pets with visits");
 

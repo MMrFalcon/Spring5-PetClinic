@@ -1,14 +1,18 @@
 package falcon.springframework.spring5petclinic.controllers;
 
+import falcon.springframework.spring5petclinic.model.Owner;
 import falcon.springframework.spring5petclinic.services.OwnerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/owners")
@@ -25,17 +29,37 @@ public class OwnerController {
         dataBinder.setDisallowedFields("id");
     }
 
-    @RequestMapping({"","/", "/index", "/index.html"})
-    String ownersList(Model model)
-    {
-        model.addAttribute("owners", ownerService.findAll());
+   @GetMapping
+   public String processFindForm(Owner owner, BindingResult bindingResult, Model model) {
 
-        return "owners/index";
-    }
+       if (owner.getLastName() == null) {
+           owner.setLastName("");
+       }
 
-    @RequestMapping("/find")
-    String findOwners() {
-        return "notImplemented";
+       List<Owner> owners = ownerService.findAllByLastNameLike("%"+ owner.getLastName() + "%");
+
+       if (owners.isEmpty()) {
+
+           bindingResult.rejectValue("lastName", "notFound", "not found");
+           return "owners/findOwners";
+
+       } else if (owners.size() == 1) {
+
+           owner = owners.get(0);
+           return "redirect:/owners/" + owner.getId();
+
+       } else {
+
+           model.addAttribute("selections", owners);
+           return "owners/ownersList";
+
+       }
+   }
+
+    @GetMapping("/find")
+    public String findOwners(Model model) {
+        model.addAttribute("owner", Owner.builder().build());
+        return "owners/findOwners";
     }
 
     @GetMapping("/{ownerId}")
