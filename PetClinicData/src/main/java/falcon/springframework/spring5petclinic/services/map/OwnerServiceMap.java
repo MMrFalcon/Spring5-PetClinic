@@ -75,7 +75,7 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
                 .findFirst()
                 .orElse(null);
     }
-//todo test me
+
     @Override
     public List<Owner> findAllByLastNameLike(String lastName) {
         return this.findAll().stream()

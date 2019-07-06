@@ -9,9 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -81,7 +79,6 @@ class OwnerSDJpaServiceTest {
     @Test
     void deleteById() {
         ownerService.deleteById(1L);
-        //default 1 times
         verify(ownerRepository).deleteById(anyLong());
     }
 
@@ -89,5 +86,16 @@ class OwnerSDJpaServiceTest {
     void delete() {
         ownerService.delete(returnedOwner);
         verify(ownerRepository).delete(any());
+    }
+
+    @Test
+    void findAllByLastNameLike() {
+        List<Owner> ownerList = new ArrayList<>();
+        ownerList.add(returnedOwner);
+
+        when(ownerRepository.findAllByLastNameLike(any())).thenReturn(ownerList);
+        List<Owner> foundOwners = ownerService.findAllByLastNameLike(LAST_NAME);
+
+        assertEquals(LAST_NAME, foundOwners.get(0).getLastName());
     }
 }
