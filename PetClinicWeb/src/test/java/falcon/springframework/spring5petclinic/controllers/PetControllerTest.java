@@ -110,25 +110,4 @@ class PetControllerTest {
 
         verify(petService).save(any());
     }
-
-    @Test
-    void populatePetTypes() throws Exception {
-//        when(petTypeService.findAll()).thenReturn(petTypes);
-//        Set<PetType> foundPetTypes = petTypeService.findAll();
-//
-//        assertEquals(petTypes.size(), foundPetTypes.size());
-//        verify(petTypeService).findAll();
-
-//        mockMvc.perform(get("/owners/1"))
-//                .andExpect(status().isOk())
-//                .andExpect(model().attributeExists("petTypes"));
-    }
-
-    @Test
-    void findOwner() {
-    }
-
-    @Test
-    void initOwnerBinder() {
-    }
 }
