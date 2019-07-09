@@ -17,6 +17,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/owners/{ownerId}/pets")
 public class VisitController {
+
+    private static final String VIEWS_VISIT_CREATE_OR_UPDATE_FORM = "pets/createOrUpdateVisitForm";
+
     private final VisitService visitService;
     private final PetService petService;
 
@@ -48,14 +51,34 @@ public class VisitController {
 
     @GetMapping("/{petId}/visits/new")
     public String initNewVisitForm() {
-        return "pets/createOrUpdateVisitForm";
+        return VIEWS_VISIT_CREATE_OR_UPDATE_FORM;
     }
 
     @PostMapping("/{petId}/visits/new")
     public String processNewVisitForm(@Valid Visit visit, BindingResult result, @PathVariable Long ownerId) {
         if (result.hasErrors()) {
-            return "pets/createOrUpdateVisitForm";
+            return VIEWS_VISIT_CREATE_OR_UPDATE_FORM;
         } else {
+            visitService.save(visit);
+            return "redirect:/owners/" + ownerId;
+        }
+    }
+
+    @GetMapping("/{petId}/visits/{visitId}/edit")
+    public String initUpdateVisitForm(@PathVariable Long visitId, Map<String, Object> model) {
+        Visit foundVisit = visitService.findById(visitId);
+        model.put("visit", foundVisit);
+        return VIEWS_VISIT_CREATE_OR_UPDATE_FORM;
+    }
+
+    @PostMapping("/{petId}/visits/{visitId}/edit")
+    public String processUpdateVisitForm(@Valid Visit visit, BindingResult result, @PathVariable Long ownerId,
+                                         @PathVariable Long visitId) {
+
+        if (result.hasErrors()) {
+            return VIEWS_VISIT_CREATE_OR_UPDATE_FORM;
+        } else {
+            visit.setId(visitId);
             visitService.save(visit);
             return "redirect:/owners/" + ownerId;
         }
