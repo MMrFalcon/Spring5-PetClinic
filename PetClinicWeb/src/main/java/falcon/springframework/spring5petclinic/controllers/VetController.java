@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,12 +25,19 @@ public class VetController {
     }
 
     @GetMapping("/vets.html")
-    String vetsList(Model model){
+    public String vetsList(Model model){
         List<Vet> vetsList = new ArrayList<>(vetService.findAll());
         vetsList.sort(Comparator.comparing(Person::getFirstName));
 
         model.addAttribute("vets", vetsList);
 
         return VETS_LIST_VIEW_URL ;
+    }
+
+    @GetMapping("/api/vets")
+    public @ResponseBody List<Vet> getVetsJSON() {
+        List<Vet> vetsList = new ArrayList<>(vetService.findAll());
+        vetsList.sort(Comparator.comparing(Person::getFirstName));
+        return vetsList;
     }
 }
